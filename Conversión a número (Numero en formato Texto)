@@ -1,0 +1,27 @@
+Sub ConvertirTextoANumero(columnas As Variant)
+    Dim ws As Worksheet
+    Dim col As Variant
+    Dim ultimaFila As Long
+    Dim i As Long
+    Dim celda As Range
+    
+    ' Asignar la hoja actual activa a ws (puedes cambiarla a una específica si es necesario)
+    Set ws = ActiveSheet
+    
+    ' Recorrer cada columna proporcionada en los parámetros
+    For Each col In columnas
+        ' Obtener la última fila con datos en la columna actual
+        ultimaFila = ws.Cells(ws.Rows.Count, col).End(xlUp).Row
+        
+        ' Recorrer cada celda de la columna desde la fila 1 hasta la última fila
+        For i = 1 To ultimaFila
+            Set celda = ws.Cells(i, col)
+            
+            ' Verificar si el valor de la celda es texto y puede ser convertido en número
+            If IsNumeric(celda.Value) And VarType(celda.Value) = vbString Then
+                ' Convertir el texto a número
+                celda.Value = Val(celda.Value)
+            End If
+        Next i
+    Next col
+End Sub
